@@ -1,6 +1,6 @@
 # Shapespyer
 
-Workshop material for the Shapesyer package.
+Workshop material for the Shapespyer package.
 
 ## Project Source
 
