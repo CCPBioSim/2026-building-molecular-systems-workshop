@@ -1,6 +1,14 @@
 # Shapespyer
 
-Workshop material for the Shapespyer package.
+Workshop material for the `Shapespyer` package.
+
+## Workshop checklist
+
+### Content
+- [ ] Python notebook containing training material.
+- [ ] List of dependencies and accepted version ranges for each.
+- [ ] Supporting material e.g. images, input files.
+
 
 ## Project Source
 
