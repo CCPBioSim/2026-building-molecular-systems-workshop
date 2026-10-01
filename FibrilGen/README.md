@@ -1,6 +1,6 @@
 # FibrilGen
 
-https://github.com/ChaoYuYang0/FibrilGen-v0
+Workshop material for the `FibrilGen` package.
 
 ## Workshop checklist
 
