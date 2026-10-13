@@ -2,17 +2,9 @@
 
 Workshop material for the `FibrilGen` package.
 
-## Workshop checklist
+[Presentation file](FibrilGen-workshop-material.pdf) and the [Google Colab file](https://github.com/ChaoYuYang0/FibrilGen-v1/blob/main/demo_Colab.ipynb) under construction.
 
-### Content
-- [ ] Python notebook containing training material.
-- [ ] List of dependencies and accepted version ranges for each.
-- [ ] Supporting material e.g. images, input files.
-
-## Workshop materials
-[Presentation file](FibrilGen-workshop-material.pdf) and the [Google Colab file](https://github.com/ChaoYuYang0/FibrilGen-v1/blob/main/demo/Google_Colab/my_first_demo.ipynb) under construction.
-
-## Project Source
+## References
 
 | Category       | Badges |
 |----------------|--------|
