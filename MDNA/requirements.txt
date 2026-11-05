@@ -1,0 +1,8 @@
+# Packages the notebooks import. Python 3.14 was used for the saved outputs.
+# Pin exact versions with `pip freeze` from the environment that runs the notebooks.
+numpy
+mdtraj
+mdna==0.2.0
+molviewspec
+matplotlib
+seaborn
