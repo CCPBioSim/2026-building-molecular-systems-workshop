@@ -1,0 +1,2 @@
+openbabel==3.2.1
+py3Dmol==2.5.5
