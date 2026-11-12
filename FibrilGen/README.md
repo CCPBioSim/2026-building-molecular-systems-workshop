@@ -2,9 +2,9 @@
 
 `FibrilGen` is a Python library for bottom-up construction of various cross-beta structures using user-initiated parameters. These structures can be built to fit experimental observations (e.g., cryo-EM or ssNMR data) or be fully hypothetical. A FibrilGen/MD workflow can screen geometrically feasible and energetically favourable cross-beta structures.
 
-In this workshop, I will use a Jupyter notebook to demonstrate FibrilGen building cross-beta structures (see the [presentation file](FibrilGen-workshop-material.pdf). You could run [this notebook](demo_Colab.ipynb) in Google Colab and adjust the input variables to see how they change the assembled structures. Note that FibrilGen conducts geometry searches to assemble compact cross-beta structures. Neighbouring peptides are kept within the nonbonding interaction cutoff to allow further energy-based optimisations and hypothesise cross-beta structures.
+In this workshop, we will use a Jupyter notebook to demonstrate FibrilGen building cross-beta structures (see the [presentation file](FibrilGen-workshop-material.pdf). You could run [this notebook](demo_Colab.ipynb) in Google Colab and adjust the input variables to see how they change the assembled structures. Note that FibrilGen conducts geometry searches to assemble compact cross-beta structures. Neighbouring peptides are kept within the nonbonding interaction cutoff to allow further energy-based optimisations and hypothesise cross-beta structures.
 
-To store FibrilGen structures locally, you can download the workshop GitHub repository and run the notebooks on your computer.
+You can also download the workshop materials to your computer and set up a conda environment to generate FibrilGen structures locally.
 
 ```bash
 # Download the workshop GitHub repository
@@ -20,7 +20,7 @@ python3 setup.py
 jupyter lab
 ```
 
-You can run the Jupyter notebooks separately.
+Use JupyterLab to run these Jupyter notebooks.
 
 | Content | Links | Data |
 | --- | --- | --- |
@@ -28,18 +28,19 @@ You can run the Jupyter notebooks separately.
 | Build a bilayer structure| [build_a_bilayer.ipynb](build_a_bilayer.ipynb)  | [data_bilayers](data_bilayers) |
 | Build a fibril structure| [build_a_fibril.ipynb](build_a_fibril.ipynb) | [data_fibrils](data_fibrils) |
 
-To leave the fibrilgen workspace, close your terminal by Crtl-C and deactivate the environment.
+To leave the workspace, close your terminal by pressing Ctrl-C and deactivate the `fibrilgen` environment.
+
 ```bash
 conda deactivate fibrilgen
 ```
 
-To re-enter the fibrilgen workspace, activate your `fibrilgen` environment and initiate `JupyterLab`.
+To re-enter the workspace, activate your `fibrilgen` environment and initiate JupyterLab.
 ```bash
 conda activate fibrilgen
 jupyter lab
 ```
 
-For first-time users, start with [peptide molecules](data_b_strands/ref) and [periodic assembly patterns](data_bilayers/ref) known to form cross-beta structures. You could build cross-beta structures as seen in the TEM and cryo-EM images. You are then invited to change the stacking and the initial twists to see whether there are other geometrically feasible cross-beta assemblies (see examples in [build_fibrils](data_fibrils/ref). Finally, we suggest that you try your own peptide molecule and reference bilayer structure to construct cross-beta fibril structures. 
+For first-time users, try building example [peptide molecules](data_b_strands/ref), [bilayer structures](data_bilayers/ref), and [fibril structures](data_fibrils/ref). You can find reference codes inside the folders. After that, feel free to use your own peptide molecule and bilayer structure to construct cross-beta fibril structures.
 
 ## Resources
 Please explore the websites to learn more about FibrilGen. FibrilGen reference API is available at this [page](https://chaoyuyang0.github.io/fibrilgen-docs/). The latest FibrilGen version, FibrilGen-v1, is available at this [GitHub repository](https://github.com/ChaoYuYang0/FibrilGen-v1).
