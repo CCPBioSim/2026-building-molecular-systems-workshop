@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+
+# Slide decks (large binaries)
+*.key
+*.pdf
+
+# Local pixi environment (pixi.toml and pixi.lock are tracked)
+.pixi/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Secrets and editor settings
+.env
+.vscode/
+.idea/
+
+# Windows
+Thumbs.db
