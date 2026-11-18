@@ -21,6 +21,7 @@ RUN git clone --depth 1 --branch "${WORKSHOP_REF}" "${WORKSHOP_REPO}" /tmp/works
 
 
 # install via conda jupyterlab, prepmd, pymol (for fibrilgen) and first of tempy-reff deps
+COPY --chown=$MAMBA_USER:$MAMBA_USER install/tempyreff_requirements.txt install/requirements.txt /tmp/workshop/install/
 RUN micromamba install -y -n base \
     -c CCPBioSim -c salilab -c conda-forge \
     jupyterlab==4.6.6 \

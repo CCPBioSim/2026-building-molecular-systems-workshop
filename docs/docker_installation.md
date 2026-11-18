@@ -24,7 +24,7 @@ cd 2026-building-molecular-systems-workshop
 docker build -f docker/dockerfile -t workshop:latest .
 ```
 
-If you already have the repository, just change into its root folder and run the build command. The first build downloads dependencies and may take some time. The `docker/dockerfile` and workshop materials need to be present in the checkout; the image is not yet provided as a published download.
+If you already have the repository, just change into its root folder and run the build command. The build uses the local requirements files in `install/` and downloads the workshop materials from the repository's `main` branch. The first build downloads dependencies and may take some time. A GitHub Actions workflow publishes the image to `ghcr.io/ccpbiosim/2026-building-molecular-systems-workshop:latest`; access depends on the package's visibility.
 
 ## 3. Start JupyterLab
 
