@@ -1,0 +1,67 @@
+FROM mambaorg/micromamba:2.10.0
+
+WORKDIR /app
+
+# install git and wget
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends git wget \
+    && rm -rf /var/lib/apt/lists/*
+USER $MAMBA_USER
+
+
+# copy workshop content
+ARG WORKSHOP_REPO=https://github.com/CCPBioSim/2026-building-molecular-systems-workshop.git
+ARG WORKSHOP_REF=main
+RUN git clone --depth 1 --branch "${WORKSHOP_REF}" "${WORKSHOP_REPO}" /tmp/workshop \
+    && mkdir -p /app \
+    && cp -a /tmp/workshop/prepmd /tmp/workshop/Shapespyer \
+             /tmp/workshop/FibrilGen /tmp/workshop/MDNA /app/ \
+    && chown -R "$MAMBA_USER:$MAMBA_USER" \
+             /app/prepmd /app/Shapespyer /app/FibrilGen /app/MDNA /tmp/workshop
+
+
+# install via conda jupyterlab, prepmd, pymol (for fibrilgen) and first of tempy-reff deps
+RUN micromamba install -y -n base \
+    -c CCPBioSim -c salilab -c conda-forge \
+    jupyterlab==4.6.6 \
+    prepmd==1.0.2 \
+    pymol-open-source==3.1.0 \
+    -f /tmp/workshop/install/tempyreff_requirements.txt \
+    && micromamba clean --all --yes \
+    && rm -rf /tmp/mamba-pkgs
+
+
+# install tempy-ref
+ARG TEMPY_REFF_COMMIT=af82854a3785174912da4f1c55ddbcc4d3cc8236
+RUN git clone https://gitlab.com/topf-lab/tempy-reff.git /tmp/tempy-reff \
+    && git -C /tmp/tempy-reff checkout "$TEMPY_REFF_COMMIT" \
+    && micromamba run -n base python -m pip install /tmp/tempy-reff \
+    && rm -rf /tmp/tempy-reff
+    
+
+# install tempy-ref deps
+ARG VOXCOV_COMMIT=65d5466de415dbcd60e51523238a8fe5e46a31a5
+ARG VOXCOVPY_COMMIT=3f8ef818f0da38ba9466e3a0ec81b8378b8eba7c
+RUN git clone https://github.com/thomasmulvaney/voxcov.git /tmp/voxcov \
+    && git -C /tmp/voxcov checkout "$VOXCOV_COMMIT" \
+    && git clone https://github.com/thomasmulvaney/voxcov-py.git /tmp/voxcov-py \
+    && git -C /tmp/voxcov-py checkout "$VOXCOVPY_COMMIT" \
+    && cd /tmp/voxcov-py \
+    && micromamba run -n base maturin develop --release \
+    && rm -rf /tmp/voxcov /tmp/voxcov-py
+
+
+# copy fibrilgen source
+ARG FIBRILGEN_COMMIT=1149ee77060343dc717b8d7cc3e9ec205facfd3f
+RUN git clone https://github.com/ChaoYuYang0/FibrilGen-v1.git /app/FibrilGen/fibrilgen_local \
+    && git -C /app/FibrilGen/fibrilgen_local checkout --detach "${FIBRILGEN_COMMIT}"
+
+
+# install deps via pip for fibrilgen, shapespyer, mdna
+RUN micromamba run -n base pip install --no-cache-dir -r /tmp/workshop/install/requirements.txt \
+    && rm -rf /tmp/workshop
+
+
+# run jupyter lab
+EXPOSE 8888
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
