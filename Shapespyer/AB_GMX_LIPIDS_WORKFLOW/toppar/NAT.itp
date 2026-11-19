@@ -1,0 +1,13 @@
+;;
+;; GROMACS topology file for NAT molecule/atom (SOD originally)
+;;
+
+
+[ moleculetype ]
+; name	nrexcl
+NAT	     1
+
+[ atoms ]
+; nr	type	resnr	residu	atom	cgnr	charge	mass
+     1        NAT      1      NAT    NAT      1     1.000000    22.9898   ; qtot  1.000
+

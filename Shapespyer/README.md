@@ -5,10 +5,15 @@ Workshop material for the `Shapespyer` package.
 ## Workshop checklist
 
 ### Content
-- [ ] Python notebook containing training material.
-- [ ] List of dependencies and accepted version ranges for each.
-- [ ] Supporting material e.g. images, input files.
+- [V] Python notebook containing training material.
+- [V] List of dependencies and accepted version ranges for each.
+- [V] Supporting material e.g. images, input files.
 
+## Installing Shapespyer from PyPI.org
+
+python -m pip install "Shapespyer[protein]==0.3.1"
+
+Check `requirements.txt` for the dependencies (which are installed automatically by the above command)
 
 ## Project Source
 

@@ -1,0 +1,67 @@
+#!/bin/bash
+
+##################################################
+#                                                #
+#  Shapespyer - soft matter structure generator  #
+#  Script to run dl_field directly in user PWD   #
+#                                                #
+#  Author: Andrey Brukhno (c) November 2025      #
+#          Daresbury Laboratory, SCD, STFC/UKRI  #
+#                                                #
+##################################################
+
+# check the options
+if [ $# -eq 1 ]; then
+  HELP=$1
+  help="${HELP,,}"
+fi
+
+EXAMPLES=$(cd .. && pwd)
+
+for L in DPPC DOPC POPC; do
+  W=usr-out/tails/$L
+  mkdir -p $W/toppar
+  
+  echo
+  echo "Working on ${L} in ${W}"
+
+  # the Stage 2 outputs (the newest ones, if there are several runs)
+  ITP=$(ls -t usr-out/dlf/dlf_output*/${L}_dlf.itp | head -1)
+  GRO=$(ls -t usr-out/dlf/dlf_output*/${L}_dlf.gro | head -1)
+  
+  echo
+  echo "Adding restraints: ${ITP} -> $W/toppar/$L.itp -> $W/toppar/${L}_PRB.itp"
+
+  # topologies: plain (gmx-setup-equil expects it) and restrained (used in the runs)
+  cp $ITP $W/toppar/$L.itp
+  python inp/lipid_tail_restraints.py $W/toppar/$L.itp $W/toppar/${L}_PRB.itp
+
+  echo
+  diff $W/toppar/$L.itp $W/toppar/${L}_PRB.itp
+
+  cp $EXAMPLES/GMX_LIPS_VES/toppar/forcefield.itp $EXAMPLES/GMX_LIPS_VES/toppar/TIP3.itp $W/toppar/
+
+  echo
+  echo "Reshaping the box: gmx editconf -f $GRO -o $W/${L}_seed.gro -c -box 6 6 6"
+
+  # seed in the centre of the box, then solvate it
+  gmx editconf -f $GRO -o $W/${L}_seed.gro -c -box 6 6 6
+
+  ( cd $W
+    NATOMS=$(sed -n 2p ${L}_seed.gro | tr -d ' ')
+    echo
+    echo "Preparing equilibration runs: gmx-setup-equil ${L}_seed.gro $L $NATOMS"
+    gmx-setup-equil ${L}_seed.gro $L $NATOMS
+    # include the restrained topology instead of the plain one
+    if [ -f ${L}1-wTIP3.top ]; then
+      echo
+      echo "Amending ${L}1-wTIP3.top: toppar/${L}.itp -> toppar/${L}_PRB.itp"
+      sed -i "s|toppar/${L}.itp|toppar/${L}_PRB.itp|" ${L}1-wTIP3.top
+      for i in 0 1 2 3; do cp $EXAMPLES/GMX_DPPC_Tails/inp/DPPC1-wTIP3-eq$i.mdp ${L}1-wTIP3-eq$i.mdp; done
+    fi
+    ls
+  )
+done
+
+exit 0
+
