@@ -8,7 +8,7 @@ Repository containing workshop material for the 2026 Building Molecular Systems 
 There are two options for installing the software dependencies for this workshop. You can either install all dependencies and run jupyterlab locally. Alternatively, you can run via a docker container without having to install dependencies locally.
 
 - [Local installation (conda)](docs/local_installation.md): `bash install/install_workshop.sh`
-- [Docker installation](docs/docker_installation.md): `docker build -f docker/dockerfile -t workshop:latest .`
+- [Docker installation](docs/docker_installation.md): `docker pull ghcr.io/ccpbiosim/2026-building-molecular-systems-workshop:latest`
 
 ## Repository layout
 

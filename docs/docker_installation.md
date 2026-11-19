@@ -14,25 +14,26 @@ docker version
 
 Docker Desktop licensing may depend on your organisation; see the installation page for details.
 
-## 2. Build the workshop image
+## 2. Pull the workshop image
 
-Download or clone the workshop repository, then open a terminal in its root folder, containing `docker/dockerfile` and `install/requirements.txt`. For example:
+Pull the image from GitHub Container Registry:
 
 ```bash
-git clone https://github.com/CCPBioSim/2026-building-molecular-systems-workshop.git
-cd 2026-building-molecular-systems-workshop
-docker build -f docker/dockerfile -t workshop:latest .
+docker pull ghcr.io/ccpbiosim/2026-building-molecular-systems-workshop:latest
 ```
 
-If you already have the repository, just change into its root folder and run the build command. The build uses the local requirements files in `install/` and downloads the workshop materials from the repository's `main` branch. The first build downloads dependencies and may take some time. A GitHub Actions workflow publishes the image to `ghcr.io/ccpbiosim/2026-building-molecular-systems-workshop:latest`; access depends on the package's visibility.
-The published image targets both Linux AMD64 and ARM64.
+Alternatively, clone the repository and build the image from its root:
+
+```bash
+docker build -f docker/dockerfile -t ghcr.io/ccpbiosim/2026-building-molecular-systems-workshop:latest .
+```
 
 ## 3. Start JupyterLab
 
 Run this once to create and start the workshop container (for NVIDIA GPU access, see below):
 
 ```bash
-docker run -it --name workshop -p 127.0.0.1:8888:8888 workshop:latest
+docker run -it --name workshop -p 127.0.0.1:8888:8888 ghcr.io/ccpbiosim/2026-building-molecular-systems-workshop:latest
 ```
 
 Open the `http://127.0.0.1:8888/lab?token=...` URL printed in the terminal. In JupyterLab, open a notebook and run its cells.
@@ -51,14 +52,14 @@ Notebook changes and output files saved inside this container persist when it st
 2. Before starting JupyterLab, check whether OpenMM can use CUDA:
 
    ```bash
-   docker run --rm --gpus all workshop:latest python -m openmm.testInstallation
+   docker run --rm --gpus all ghcr.io/ccpbiosim/2026-building-molecular-systems-workshop:latest python -m openmm.testInstallation
    ```
 
    Look for a successful CUDA test. The Dockerfile does not explicitly ensure CUDA-enabled OpenMM or PyTorch packages, so GPU access alone may not be sufficient. The notebook must also select a compatible GPU backend.
 3. If the test succeeds, create the container with GPU access **instead of** the run command above:
 
    ```bash
-   docker run -it --gpus all --name workshop -p 127.0.0.1:8888:8888 workshop:latest
+   docker run -it --gpus all --name workshop -p 127.0.0.1:8888:8888 ghcr.io/ccpbiosim/2026-building-molecular-systems-workshop:latest
    ```
 
    If you already created `workshop` without GPU access, use a different container name, such as `workshop-gpu`, and use that name when restarting it.
