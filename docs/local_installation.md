@@ -2,7 +2,7 @@
 
 ## 1. Download the workshop
 
-Download and extract the [workshop repository](https://github.com/CCPBioSim/2026-building-molecular-systems-workshop), or clone it with Git. Open a terminal in the workshop folder.
+Download and extract the [workshop repository](https://github.com/CCPBioSim/2026-building-molecular-systems-workshop), or clone it with Git (via `git clone https://github.com/CCPBioSim/2026-building-molecular-systems-workshop` in the terminal).
 
 On **Windows**, first install [WSL and Ubuntu](https://learn.microsoft.com/windows/wsl/install), then use the Ubuntu terminal. On **macOS**, use Terminal; on **Linux**, use your usual terminal.
 
