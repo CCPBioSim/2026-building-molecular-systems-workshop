@@ -4,7 +4,7 @@ WORKDIR /app
 
 # install git and wget
 USER root
-RUN apt-get update && apt-get install -y --no-install-recommends git wget \
+RUN apt-get update && apt-get install -y --no-install-recommends git wget xz-utils \
     && rm -rf /var/lib/apt/lists/*
 USER $MAMBA_USER
 
