@@ -1,0 +1,206 @@
+#!/bin/bash
+
+##################################################
+#                                                #
+#  Shapespyer - soft matter structure generator  #
+#  Script to run dl_field directly in user PWD   #
+#                                                #
+#  Author: Andrey Brukhno (c) November 2025      #
+#          Daresbury Laboratory, SCD, STFC/UKRI  #
+#                                                #
+##################################################
+
+# check the options
+if [ $# -eq 1 ]; then
+  HELP=$1
+  help="${HELP,,}"
+fi
+
+if [ "$help" == "-h" ] || [ "$help" == "--help" ]; then
+cat <<EOF
+
+//////////////////////////////////////////////////////////////
+//                                                          //
+//   Script for running 'dl_field' tool directly from PWD   //
+//   Author: Dr Andrey Brukhno (c) December 2025,           //
+//           Daresbury Laboratory, SCD, STFC/UKRI           //
+//                                                          //
+//////////////////////////////////////////////////////////////
+
+--------------
+Prerequisites:
+--------------
+
+export DLF="/path/to/dl_field"
+
+'dl_f_path_temp' - template path file 
+must be found in '/path/to/dl_field' (e.g. \$HOME/dl_f_4.13b)
+
+'dl_field.control_temp' - template control file
+must be found in the current (or target) directory.
+
+------
+Usage:
+------
+> ${0##*/} -h
+> ${0##*/} --help
+> ${0##*/} <config_name.pdb> <output_base_name> <resname>
+
+EOF
+   exit 0
+fi
+
+if [ -z ${DLF+x} ]; then 
+  #echo "variable is unset"
+  #export DLF="$1"
+  echo
+  echo "Environment variable 'DLF' has not been set yet!"
+  echo "Please do (or add the command to your .bashrc):"
+  echo 'export DLF="path/to/dl_field"'
+  echo
+  exit 1
+else
+  #echo
+  #echo "Environment variable 'DLF' points to '${DLF}'."
+  #echo
+  if [ ! -d ${DLF} ]; then
+    echo "Directory '${DLF}' not found ('DLF' path variable set incorrectly?) - FULL STOP!"
+    exit
+  fi
+
+  if [ ! -f ${DLF}//dl_field ]; then
+    echo "Executable 'dl_field' not found in '${DLF}' (need to compile DL_FIELD) - FULL STOP!"
+    exit 1
+  fi
+
+  if [ ! -f ${DLF}/dl_f_path_temp ]; then
+    echo "Template file 'dl_f_path_temp' not found in '${DLF}' - FULL STOP!"
+    exit 1
+  fi
+fi
+
+CONFINP=""
+OUTBASE=""
+RESBAME=""
+if [ $# -gt 0 ]; then
+  CONFINP="$1"
+  shift
+
+  if [ $# -gt 0 ]; then
+    OUTBASE="$1"
+    shift
+  else
+    echo
+    echo "Please provide the output base name as the second argument - FULL STOP!"
+    exit 1
+  fi
+
+  if [ $# -gt 0 ]; then
+    RESNAME="$1"
+    shift
+  else
+    echo
+    echo "Please provide the residue name as the third argument - FULL STOP!"
+    exit 1
+  fi
+fi
+
+UWD="$(pwd)"
+
+if [ ! -f ${UWD}/dl_field.control_temp ]; then
+  echo
+  echo "Template input file 'dl_field.control_temp' not found in the current directory!"
+  #echo "Will try using 'dl_field.control_temp' provided with DL_FIELD."
+  echo
+
+  if [ -f ${DLF}/dl_field.control_temp ]; then
+    # echo "Will use template '$DLF/dl_field.control_temp' provided with DL_FIELD."
+    echo "Will use template 'dl_field.control_temp' provided with DL_FIELD."
+    cp $DLF/dl_field.control_temp $UWD/
+  else
+    echo "Template input file 'dl_field.control_temp' not found in DL_FIELD install location - FULL STOP!"
+    exit 1
+  fi
+fi
+
+if [ -f ${UWD}/dl_field.control_temp ]; then
+  if [ -f ${UWD}/${CONFINP} ]; then
+    if [ -f ${UWD}/dl_field.control ]; then
+      echo
+      echo "Backing up 'dl_field.control' file in the current directory."
+      mv -v dl_field.control dl_field.control_bkp
+    fi
+    echo
+    echo "Amending 'dl_field.control' based on the user input."
+    sed -e 's|'"#UWD"'|'"${UWD}"'|g' -e 's|'"#CONF"'|'"${CONFINP}"'|g' ${UWD}/dl_field.control_temp > ${UWD}/dl_field.control
+  else
+    echo
+    echo "Input file '${CONFINP}' does not exist in the current directory - FULL STOP!"
+    exit 1
+  fi
+else
+  echo
+  echo "Input file 'dl_field.control_temp' not found in the current directory - FULL STOP!"
+  exit 1
+fi
+
+echo
+echo "Entering DL_FIELD install location ..."
+cd ${DLF}
+
+if [ -f dl_f_path_temp ]; then
+  if [ -f dl_f_path ]; then
+    echo
+    echo "Backing up 'dl_f_path' file in DL_FIELD install location."
+    mv -v dl_f_path dl_f_path_bkp
+  fi
+  sed 's|'"#UWD"'|'"${UWD}"'|g' dl_f_path_temp > dl_f_path
+  echo
+  echo "DLF output path is set to 'dlf_output#' in the current directory."
+else
+  echo "Template file 'dl_f_path_temp' not found in DL_FIELD location - FULL STOP!"
+  exit 1
+fi
+
+echo
+echo "Running 'dl_field' ..."
+
+./dl_field
+
+echo
+echo "Getting back to the working directory ..."
+cd ${UWD}
+
+let "digs = 0"
+dlist=( $(find ./ -mindepth 1 -maxdepth 1 -type d -name 'dlf_output*') )
+#echo "Dir-list: ${dlist[@]}"
+for dir in "${dlist[@]}"; do
+  digits=$(echo "$dir" | grep -o -E '[0-9]+$' | tail -1)
+  [[ $digits -gt $digs ]] && digs=$digits
+done
+sdir="dlf_output$digs"
+echo
+echo "Latest output is in '${sdir}'"
+echo
+flist=( $(find ./$sdir -mindepth 1 -maxdepth 1 -type f -name 'gromacs*') )
+for f in ${flist[@]}; do
+  fname=$(basename -- "$f");
+  fbase="${fname%.*}"
+  fext="${fname##*.}"
+  echo "${f} -> ${sdir}/${OUTBASE}.${fext}"
+  mv $f "${sdir}/${OUTBASE}.${fext}"
+  if [ ${RESNAME} != "" ]; then
+    sed -i 's/1    3/'"${RESNAME}      3"'/g' ${sdir}/${OUTBASE}.${fext}
+    sed -i 's/Group 1/'"Group ${RESNAME}"'/g' ${sdir}/${OUTBASE}.${fext}
+    sed -i 's/Produced from/'"Produced by"'/g' ${sdir}/${OUTBASE}.${fext}
+  fi
+done
+sed -i 's/Configuration.*/'"Based on configuration: ${CONFINP}"'/g' ${sdir}/${OUTBASE}.top
+sed -i 's/Control file title. For DL_FIELD 4.10/'"Topology file for ${RESNAME}"'/g' ${sdir}/${OUTBASE}.top
+sed -i 's/include \"gromacs1.itp\"/include \"'"${OUTBASE}.itp"'\"/g' ${sdir}/${OUTBASE}.top
+sed -i 's/1      1/'"${RESNAME}      1"'/g' ${sdir}/${OUTBASE}.top
+#echo "Removing temporary files: ${sdir}/dl_poly.*"
+rm ${sdir}/dl_poly.*
+echo
+
+exit 0
