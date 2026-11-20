@@ -7581,17 +7581,56 @@ a.anchor-link {
 <h3 id="Directory-contents">Directory contents<a class="anchor-link" href="#Directory-contents">¶</a></h3><p><code>inp/lipids.sml</code> - SMILES strings for DPPC, DOPC and POPC.</p>
 <p><code>inp/lipid_tail_restraints.py</code> - helper script that adds the tail-alignment restraints to a lipid topology (see stage 3).</p>
 <p><code>toppar/</code> - contains all the topology and simulation setup files necessary for this tutorial</p>
-<p><strong>NOTE:</strong> To validate user's generated outputs produced in this tutorial, unpack the archive (this is a <em>requirement</em> for this tutorial!):</p>
-<p><code>tar -xvJf usr-ref.tar.xz</code></p>
-<p>The above command will create the following structure of subfolders:</p>
+<p><strong>NOTE:</strong> To validate user's generated outputs produced in this tutorial, unpack the archive (this is a <strong>requirement for this tutorial</strong>):</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6a9806fc-9572-4ee8-885f-06a136443c10">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span>%%bash
+<span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-d<span class="w"> </span>usr-ref<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-f<span class="w"> </span>usr-ref.tar.xz<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>tar<span class="w"> </span>-xf<span class="w"> </span>usr-ref.tar.xz
+ls<span class="w"> </span>usr-ref/
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=500f7a62-b09a-4a4a-912b-341748d680bf">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>The above command creates the following structure of subfolders:</p>
 <p><code>usr-ref/</code> - contains reference data for user to be able to compare and validate their results.</p>
 <p><code>usr-ref/smiles/</code> - reference outputs of <code>smiles</code> runs for lipids</p>
 <p><code>usr-ref/dlf/</code> - reference data obtained with DL_FIELD</p>
 <p><code>usr-ref/restraints/</code> - reference data for restraining lipid tails</p>
 <p><code>usr-ref/tails/</code> - reference data obtained upon running Gromacs with restraints for aligning lipid tails</p>
 <p><code>usr-ref/vesicle/</code> - reference data obtained upon running Gromacs equilibration stages for a vesicle</p>
-<p><strong>NOTE:</strong> Working through this notebook we will create <code>usr-out/</code> which will contain all the user produced artifacts, so the reference outputs in <code>usr-ref/</code> are intact!</p>
+<p>Now create <code>usr-out/</code> which will contain all the user produced artifacts, so the reference outputs in <code>usr-ref/</code> are kept intact!</p>
 <p><code>usr-out/</code> - will contain the same subfolder structure as that found in <code>usr-ref/</code>.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d59ff5cc-2cf2-4d52-bce1-7f4e97980676">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>mkdir<span class="w"> </span>-vp<span class="w"> </span>usr-out/
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -7634,7 +7673,6 @@ a.anchor-link {
     <span class="n">cryst</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'CRYST1'</span><span class="p">)),</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">box</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">cryst</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">cryst</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">33</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span>
     <span class="k">return</span> <span class="n">names</span><span class="p">,</span> <span class="n">resnames</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">box</span>
-
 
 <span class="o">!</span>mkdir<span class="w"> </span>-p<span class="w"> </span>usr-out/smiles
 <span class="o">!</span>ls<span class="w"> </span>inp<span class="w"> </span>inp/assets

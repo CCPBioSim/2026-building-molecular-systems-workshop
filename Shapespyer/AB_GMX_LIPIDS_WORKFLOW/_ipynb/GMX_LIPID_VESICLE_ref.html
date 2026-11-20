@@ -7581,17 +7581,86 @@ a.anchor-link {
 <h3 id="Directory-contents">Directory contents<a class="anchor-link" href="#Directory-contents">¶</a></h3><p><code>inp/lipids.sml</code> - SMILES strings for DPPC, DOPC and POPC.</p>
 <p><code>inp/lipid_tail_restraints.py</code> - helper script that adds the tail-alignment restraints to a lipid topology (see stage 3).</p>
 <p><code>toppar/</code> - contains all the topology and simulation setup files necessary for this tutorial</p>
-<p><strong>NOTE:</strong> To validate user's generated outputs produced in this tutorial, unpack the archive (this is a <em>requirement</em> for this tutorial!):</p>
-<p><code>tar -xvJf usr-ref.tar.xz</code></p>
-<p>The above command will create the following structure of subfolders:</p>
+<p><strong>NOTE:</strong> To validate user's generated outputs produced in this tutorial, unpack the archive (this is a <strong>requirement for this tutorial</strong>):</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6a9806fc-9572-4ee8-885f-06a136443c10">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span>%%bash
+<span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-d<span class="w"> </span>usr-ref<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-f<span class="w"> </span>usr-ref.tar.xz<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>tar<span class="w"> </span>-xf<span class="w"> </span>usr-ref.tar.xz
+ls<span class="w"> </span>usr-ref/
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>dlf
+restraints
+smiles
+tails
+vesicle
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=500f7a62-b09a-4a4a-912b-341748d680bf">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>The above command creates the following structure of subfolders:</p>
 <p><code>usr-ref/</code> - contains reference data for user to be able to compare and validate their results.</p>
 <p><code>usr-ref/smiles/</code> - reference outputs of <code>smiles</code> runs for lipids</p>
 <p><code>usr-ref/dlf/</code> - reference data obtained with DL_FIELD</p>
 <p><code>usr-ref/restraints/</code> - reference data for restraining lipid tails</p>
 <p><code>usr-ref/tails/</code> - reference data obtained upon running Gromacs with restraints for aligning lipid tails</p>
 <p><code>usr-ref/vesicle/</code> - reference data obtained upon running Gromacs equilibration stages for a vesicle</p>
-<p><strong>NOTE:</strong> Working through this notebook we will create <code>usr-out/</code> which will contain all the user produced artifacts, so the reference outputs in <code>usr-ref/</code> are intact!</p>
+<p>Now create <code>usr-out/</code> which will contain all the user produced artifacts, so the reference outputs in <code>usr-ref/</code> are kept intact!</p>
 <p><code>usr-out/</code> - will contain the same subfolder structure as that found in <code>usr-ref/</code>.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d59ff5cc-2cf2-4d52-bce1-7f4e97980676">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>mkdir<span class="w"> </span>-vp<span class="w"> </span>usr-out/
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>mkdir: created directory 'usr-out/'
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -7600,7 +7669,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
@@ -7634,7 +7703,6 @@ a.anchor-link {
     <span class="n">cryst</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'CRYST1'</span><span class="p">)),</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">box</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">cryst</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">cryst</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">33</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span>
     <span class="k">return</span> <span class="n">names</span><span class="p">,</span> <span class="n">resnames</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">box</span>
-
 
 <span class="o">!</span>mkdir<span class="w"> </span>-p<span class="w"> </span>usr-out/smiles
 <span class="o">!</span>ls<span class="w"> </span>inp<span class="w"> </span>inp/assets
@@ -7679,7 +7747,7 @@ CHL.itp  DOPC_DLF.itp	   DPPC_DLF.itp      POPC_DLF.itp
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>cat<span class="w"> </span>inp/lipids.sml
@@ -7744,7 +7812,7 @@ chem.f.      name   SMILES string
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>smiles<span class="w"> </span>-i<span class="w"> </span>lipids.sml<span class="w"> </span>-d<span class="w"> </span>inp,usr-out/smiles<span class="w"> </span>-o<span class="w"> </span>DPPCC_smiles.gro<span class="w"> </span>-r<span class="w"> </span>DPPCC<span class="w"> </span>&gt;<span class="w"> </span>usr-out/smiles/smiles.log
@@ -7787,7 +7855,7 @@ usr-out/smiles/DPPCC_smiles.gro
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -7862,7 +7930,7 @@ usr-out/smiles/DPPCC_smiles.gro
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>smiles<span class="w"> </span>-i<span class="w"> </span>lipids.sml<span class="w"> </span>-d<span class="w"> </span>inp,usr-out/smiles<span class="w"> </span>-o<span class="w"> </span>DPPC_smiles.pdb<span class="w"> </span>-r<span class="w"> </span>DPPC<span class="w"> </span>&gt;&gt;<span class="w"> </span>usr-out/smiles/smiles.log
@@ -7893,7 +7961,7 @@ usr-out/smiles/DPPC_smiles.pdb
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">view</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_structure_file</span><span class="p">(</span><span class="s1">'usr-out/smiles/DPPC_smiles.pdb'</span><span class="p">,</span> <span class="n">gui</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -7936,7 +8004,7 @@ usr-out/smiles/DPPC_smiles.pdb
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">torsion</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">):</span>
@@ -8043,7 +8111,7 @@ cd ../..
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy `dlf` folder with the DL_FIELD outputs from the refernece:</span>
@@ -8083,7 +8151,7 @@ dlf_notation.output  POPC_dlf.itp  POPC_dlf.top
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">'9,19p'</span><span class="w"> </span>usr-ref/dlf/dlf_output1/DPPC_dlf.itp
@@ -8133,7 +8201,7 @@ DPPC      3
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>ls<span class="w"> </span><span class="o">{</span>ASSETS<span class="o">}</span>/*
@@ -8175,7 +8243,7 @@ DPPC      3
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'assets topology (DPPC_DLF.itp), the first few atoms:'</span><span class="p">)</span>
@@ -8257,7 +8325,7 @@ GRO coords for molecule set DPPCC from SMILES
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">view</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_structure_file</span><span class="p">(</span><span class="s1">'./inp/assets/DPPC_aligned.gro'</span><span class="p">,</span> <span class="n">gui</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -8342,7 +8410,7 @@ GRO coords for molecule set DPPCC from SMILES
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>mkdir<span class="w"> </span>-p<span class="w"> </span>usr-out/restraints
@@ -8461,7 +8529,7 @@ N=$(sed -n 2p ${L}_seed.gro | tr -d ' ')
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy `tails` folder with the simulation results from the refernece:</span>
@@ -8555,7 +8623,7 @@ Checking restrainted structure for POPC:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="ch">#!pwd</span>
@@ -8633,7 +8701,7 @@ Checking restrainted structure for POPC:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">heads</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'DOPC'</span><span class="p">:</span> <span class="s1">'P'</span><span class="p">,</span> <span class="s1">'DPPC'</span><span class="p">:</span> <span class="s1">'P'</span><span class="p">,</span> <span class="s1">'POPC'</span><span class="p">:</span> <span class="s1">'P'</span><span class="p">,</span> <span class="s1">'CHL'</span><span class="p">:</span> <span class="s1">'O3'</span><span class="p">}</span>
@@ -8682,7 +8750,7 @@ Checking restrainted structure for POPC:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">cd</span> -q usr-out/vesicle/
@@ -8730,7 +8798,7 @@ config_DOPC-DPPC-POPC-CHL_mi19-19-19-2_mx134-126-130-70_frc20x40x30x10-30x10x40x
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># vesicle = [f for f in glob.glob('usr-out/vesicle/config_*_ves_*.gro') if 'frc20x40x30x10-30x10x40x20' in f][0]</span>
@@ -8847,7 +8915,7 @@ cat<span class="w"> </span>solutes-posres.txt
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
@@ -8927,7 +8995,7 @@ gmx-equilibrate<span class="w"> </span>-nohup<span class="w"> </span><span class
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">stage</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span>
@@ -8993,7 +9061,7 @@ eq6:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
@@ -9057,7 +9125,7 @@ eq6: using eq6/analysis/DOPC200-DPPC139-POPC273-CHL127-nowTIP3-eq6_skip10.dcd (1
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
@@ -9167,7 +9235,7 @@ eq6: mixed-lipid cluster output already present
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -9332,7 +9400,7 @@ eq6: mixed-lipid cluster output already present
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [26]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">leaflets</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'int'</span><span class="p">:</span> <span class="p">(</span><span class="s1">'inner'</span><span class="p">,</span> <span class="s1">'C0'</span><span class="p">),</span> <span class="s1">'ext'</span><span class="p">:</span> <span class="p">(</span><span class="s1">'outer'</span><span class="p">,</span> <span class="s1">'C3'</span><span class="p">)}</span>
