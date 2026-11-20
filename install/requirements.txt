@@ -2,7 +2,7 @@
 openbabel==3.2.1
 py3Dmol==2.5.5
 # Shapespyer
-shapespyer[protein]==0.3.0
+shapespyer[protein]==0.3.1
 # mdna
 numpy==2.2.6
 mdtraj==1.11.2
