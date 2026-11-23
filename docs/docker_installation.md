@@ -1,5 +1,7 @@
 # Running the workshop with Docker
 
+Run the Docker installation workflow to install a container with all workshop dependencies included. Please note, on Apple Silicon, this Linux container cannot access the Apple GPU. For native macOS OpenCL, use the [local installation instructions](local_installation.md). AMD and Intel GPUs require different configuration.
+
 ## 1. Install Docker
 
 - **macOS:** Install and start [Docker Desktop for Mac](https://docs.docker.com/desktop/setup/install/mac-install/). Choose Apple silicon or Intel to match your Mac.
@@ -63,5 +65,3 @@ Notebook changes and output files saved inside this container persist when it st
    ```
 
    If you already created `workshop` without GPU access, use a different container name, such as `workshop-gpu`, and use that name when restarting it.
-
-On Apple Silicon, this Linux container cannot access the Apple GPU. For native macOS OpenCL, use the [local installation instructions](local_installation.md). AMD and Intel GPUs require different configuration.
