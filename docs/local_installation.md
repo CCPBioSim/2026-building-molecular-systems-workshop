@@ -1,5 +1,7 @@
 # Local workshop installation
 
+Run the local installation workflow to install all workshop dependencies in a single conda environment. If you cannot install WSL and Ubuntu on a Windows machine, consider installing dependecies via the [Docker installation](docs/docker_installation.md) method. 
+
 ## 1. Download the workshop
 
 Download and extract the [workshop repository](https://github.com/CCPBioSim/2026-building-molecular-systems-workshop), or clone it with Git (via `git clone https://github.com/CCPBioSim/2026-building-molecular-systems-workshop` in the terminal).
@@ -32,6 +34,20 @@ jupyter lab
 ```
 
 If `conda` is not available in a new terminal, initialise your shell using the conda executable printed during installation or see the [Miniforge instructions](https://github.com/conda-forge/miniforge#install), then open a new terminal.
+
+## End of workshop
+
+Once you have finished using the workshop material, deactivate the environment with:
+
+```bash
+conda deactivate workshop
+```
+
+If you no longer want the dependencies installed on your computer, you can delete the environment and all contents with:
+
+```bash
+conda env remove -n workshop
+```
 
 ## Notes
 

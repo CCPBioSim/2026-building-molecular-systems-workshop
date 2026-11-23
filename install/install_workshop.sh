@@ -88,7 +88,7 @@ done
 # jupyterlab, prepmd, pymol (for fibrilgen) and the first of tempy-reff's deps
 "$SOLVER" "$CONDA_ACTION" -y -p "$ENV_DIR" -c CCPBioSim -c salilab -c conda-forge \
     python=3.13 jupyterlab==4.6.6 prepmd==1.0.2 pymol-open-source==3.1.0 \
-    git wget --file "$INSTALL_DIR/tempyreff_requirements.txt"
+    git wget conda-forge::xz --file "$INSTALL_DIR/tempyreff_requirements.txt"
 
 # Conda activation hooks may reference unset variables.
 set +u
