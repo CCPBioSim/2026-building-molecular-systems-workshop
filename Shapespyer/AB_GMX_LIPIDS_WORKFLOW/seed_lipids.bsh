@@ -1,0 +1,158 @@
+#!/bin/bash
+
+##################################################
+#                                                #
+#  Shapespyer - soft matter structure generator  #
+#  Prepare restrained lipid seeds for GROMACS    #
+#                                                #
+#  Author: Andrey Brukhno (c) November 2025      #
+#          Daresbury Laboratory, SCD, STFC/UKRI  #
+#                                                #
+##################################################
+
+# Default lipid residue names. Override with -r or --resnames.
+RESNAMES="DPPC,DOPC,POPC"
+show_help=false
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h|--help)
+      show_help=true
+      shift
+      ;;
+    -r|--resnames)
+      if [ $# -lt 2 ]; then
+        echo "ERROR: $1 requires a comma-separated list of residue names." >&2
+        exit 2
+      fi
+      RESNAMES="$2"
+      shift 2
+      ;;
+    -r=*|--resnames=*)
+      RESNAMES="${1#*=}"
+      shift
+      ;;
+    *)
+      echo "ERROR: Unknown option '$1'. Try --help." >&2
+      exit 2
+      ;;
+  esac
+done
+
+if $show_help; then
+cat <<'EOF'
+
+Usage:
+  ./seed_lipids.bsh [-r RESNAMES]
+  ./seed_lipids.bsh [--resnames RESNAMES]
+  ./seed_lipids.bsh -h
+  ./seed_lipids.bsh --help
+
+Prepare lipid seed systems for the lipid workflow. Run this script from the
+examples/GMX_LIPIDS_WORKFLOW directory after completing the DL_FIELD stage.
+
+Options:
+  -r, --resnames RESNAMES
+      Comma-separated lipid residue names, optionally enclosed in square
+      brackets. Spaces are not accepted. The default is DPPC,DOPC,POPC.
+
+      Examples:
+        ./seed_lipids.bsh -r 'DOPC,DPPC,POPC,CHL'
+        ./seed_lipids.bsh --resnames '[DOPC,DPPC,POPC,CHL]'
+        ./seed_lipids.bsh --resnames='[DOPC,DPPC,POPC,CHL]'
+
+Required commands:
+  python                 Run inp/lipid_tail_restraints.py.
+  gmx                    Run "gmx editconf" to create each 6 x 6 x 6 nm seed.
+  gmx-setup-equil        Prepare the solvated GROMACS equilibration inputs.
+
+Required Stage 2 inputs:
+  usr-out/dlf/dlf_output*/<RESNAME>_dlf.itp
+  usr-out/dlf/dlf_output*/<RESNAME>_dlf.gro
+
+When more than one dlf_output* directory exists, the most recently modified
+matching .itp and .gro files are used.
+
+The script also copies forcefield.itp and TIP3.itp from the sibling
+GMX_LIPS_VES example and equilibration .mdp templates from GMX_DPPC_Tails.
+Those example directories must therefore remain in their standard locations.
+
+Outputs are created under:
+  usr-out/tails/<RESNAME>/
+
+For each lipid, the script creates a centred seed structure, generates a
+topology containing graph-derived tail restraints, prepares equilibration
+inputs, changes the generated topology to use the restrained .itp file, and
+copies the eq0-eq3 .mdp templates. Existing files with the same names may be
+overwritten.
+
+EOF
+  exit 0
+fi
+
+# Accept both "DOPC,DPPC" and "[DOPC,DPPC]" forms.
+RESNAMES="${RESNAMES#[}"
+RESNAMES="${RESNAMES%]}"
+IFS=',' read -r -a LIPIDS <<< "$RESNAMES"
+
+if [ ${#LIPIDS[@]} -eq 0 ]; then
+  echo "ERROR: The residue-name list must not be empty." >&2
+  exit 2
+fi
+
+for L in "${LIPIDS[@]}"; do
+  if [[ -z "$L" || ! "$L" =~ ^[[:alnum:]_+-]+$ ]]; then
+    echo "ERROR: Invalid residue name '$L'. Use a comma-separated list without spaces." >&2
+    exit 2
+  fi
+done
+
+EXAMPLES=$(cd .. && pwd)
+
+for L in "${LIPIDS[@]}"; do
+  W=usr-out/tails/$L
+  mkdir -p $W/toppar
+  
+  echo
+  echo "Working on ${L} in ${W}"
+
+  # the Stage 2 outputs (the newest ones, if there are several runs)
+  ITP=$(ls -t usr-out/dlf/dlf_output*/${L}_dlf.itp | head -1)
+  GRO=$(ls -t usr-out/dlf/dlf_output*/${L}_dlf.gro | head -1)
+  
+  echo
+  echo "Adding restraints: ${ITP} -> $W/toppar/$L.itp -> $W/toppar/${L}_PRB.itp"
+
+  # topologies: plain (gmx-setup-equil expects it) and restrained (used in the runs)
+  cp $ITP $W/toppar/$L.itp
+  python inp/lipid_tail_restraints.py $W/toppar/$L.itp $W/toppar/${L}_PRB.itp
+
+  echo
+  diff $W/toppar/$L.itp $W/toppar/${L}_PRB.itp
+
+  cp $EXAMPLES/GMX_LIPS_VES/toppar/forcefield.itp $EXAMPLES/GMX_LIPS_VES/toppar/TIP3.itp $W/toppar/
+
+  echo
+  echo "Reshaping the box: gmx editconf -f $GRO -o $W/${L}_seed.gro -c -box 6 6 6"
+
+  # seed in the centre of the box, then solvate it
+  gmx editconf -f $GRO -o $W/${L}_seed.gro -c -box 6 6 6
+
+  ( cd $W
+    NATOMS=$(sed -n 2p ${L}_seed.gro | tr -d ' ')
+    echo
+    echo "Preparing equilibration runs: gmx-setup-equil ${L}_seed.gro $L $NATOMS"
+    gmx-setup-equil ${L}_seed.gro $L $NATOMS
+    # include the restrained topology instead of the plain one
+    if [ -f ${L}1-wTIP3.top ]; then
+      echo
+      echo "Amending ${L}1-wTIP3.top: toppar/${L}.itp -> toppar/${L}_PRB.itp"
+      sed -i "s|toppar/${L}.itp|toppar/${L}_PRB.itp|" ${L}1-wTIP3.top
+      for i in 0 1 2 3; do cp $EXAMPLES/GMX_DPPC_Tails/inp/DPPC1-wTIP3-eq$i.mdp ${L}1-wTIP3-eq$i.mdp; done
+    fi
+    ls
+  )
+done
+
+exit 0
+
