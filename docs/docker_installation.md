@@ -24,12 +24,6 @@ Pull the image from GitHub Container Registry:
 docker pull ghcr.io/ccpbiosim/2026-building-molecular-systems-workshop:latest
 ```
 
-Alternatively, clone the repository and build the image from its root:
-
-```bash
-docker build -f docker/dockerfile -t ghcr.io/ccpbiosim/2026-building-molecular-systems-workshop:latest .
-```
-
 ## 3. Start JupyterLab
 
 Run this once to create and start the workshop container (for NVIDIA GPU access, see below):
