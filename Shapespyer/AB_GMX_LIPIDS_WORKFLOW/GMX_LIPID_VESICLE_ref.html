@@ -7521,7 +7521,24 @@ a.anchor-link {
 <p>If necessary, follow the Shapespyer installation instructions: <a href="https://simnavi.gitlab.io/shapespyer.io/installation.html">https://simnavi.gitlab.io/shapespyer.io/installation.html</a></p>
 <p>Shapespyer repository: <a href="https://gitlab.com/simnavi/shapespyer/">https://gitlab.com/simnavi/shapespyer/</a></p>
 <p>Shapespyer documentation: <a href="https://simnavi.gitlab.io/shapespyer.io/">https://simnavi.gitlab.io/shapespyer.io/</a></p>
-<h3 id="Overview"><strong>Overview</strong><a class="anchor-link" href="#Overview">¶</a></h3><p>This tutorial is based on several shorter tutorials from the Shapespyer guide supported by <code>examples</code> in the repository:</p>
+<h3 id="Using-Jupyter-notebooks"><strong>Using Jupyter notebooks</strong><a class="anchor-link" href="#Using-Jupyter-notebooks">¶</a></h3><p>A Jupyter notebook, when it is open in a browser, is organised in <em><strong>cells</strong></em>, of which there are two types: <strong>text</strong> and <strong>code</strong>. Both types of cells can be entered for editing with a <em>mouse click inside the cell</em>. The cell that is currently in focus is highlighted with a thin vertical blue stripe on the left.</p>
+<ul>
+<li><p>Progress through cells by pressing <code>Shift</code> and <code>Enter</code> together - this key combination executes the cell in focus. <strong>Note</strong> that text cells do not produce any output but may change their mode from <strong>Markdown editing</strong> to <strong>Formatted preview</strong>.</p>
+</li>
+<li><p>If you did you notice any change upon pressing <code>Shift</code>+<code>Enter</code> combination, scroll down to the next cell.</p>
+</li>
+<li><p>If you see <code>[*]</code> on the left side of an executable (code) cell, it is still being executed - <strong>wait until <code>*</code> is replaced by a number!</strong></p>
+</li>
+<li><p><strong>Maintain the order of execution!</strong></p>
+<ul>
+<li><p>DO NOT try to execute code cells in the order different from their order of appearance in the notebook! - Some cells may not execute correctly and can produce errors, due to their inputs missing or not found due to the focus being on a wrong folder (du to jumping between folders previously).</p>
+</li>
+<li><p>DO NOT switch the focus from nor execute any cell if any previous cell is still being executed, i.e. shows [*]!</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Tutorial-Overview"><strong>Tutorial Overview</strong><a class="anchor-link" href="#Tutorial-Overview">¶</a></h3><p>This tutorial is based on several shorter tutorials from the Shapespyer guide supported by <code>examples</code> in the repository:</p>
 <p><code>examples/DLF2GMX_DPPC</code>,</p>
 <p><code>examples/GMX_DPPC_Tails</code></p>
 <p><code>examples/GMX_LIPS_VES</code>.</p>
@@ -7553,6 +7570,7 @@ a.anchor-link {
 </tr>
 </tbody>
 </table>
+<p><img alt="Vesicle" src="./_images/DOPC_DPPC_POPC_CHL_text_vesicle.png"/></p>
 <p>The tutorial workflow demonstrates the following stages:</p>
 <ol>
 <li><p><strong>SMILES → 3D</strong>: generate a <code>.gro</code> (and <code>.pdb</code>) seed configuration for each phospholipid with the <code>smiles</code> tool;</p>
@@ -7571,17 +7589,24 @@ a.anchor-link {
 <h3 id="What-can-be-run-where">What can be run where<a class="anchor-link" href="#What-can-be-run-where">¶</a></h3><ul>
 <li><p><strong>Stages 1 and 4</strong> only need Shapespyer, so all their cells can be executed in this notebook.</p>
 </li>
-<li><p><strong>Stages 2 and 3</strong> need external software: DL_FIELD (<a href="https://www.ccp5.ac.uk/dl_field/">https://www.ccp5.ac.uk/dl_field/</a>) and Gromacs (<a href="https://www.gromacs.org/">https://www.gromacs.org/</a>). <strong>NOTE:</strong> These stages will be presented without commands being executed! For stage 3, one could run MD simulations provided Gromacs is installed. The corresponding commands are given in <strong>text blocks</strong> to be run in a terminal, <em>not</em> in this notebook.</p>
+<li><p><strong>Stages 2 and 3</strong> need external software: DL_FIELD (<a href="https://www.ccp5.ac.uk/dl_field/">https://www.ccp5.ac.uk/dl_field/</a>) and Gromacs (<a href="https://www.gromacs.org/">https://www.gromacs.org/</a>).</p>
+<p><strong>NOTE:</strong> These stages will be presented without commands being executed!</p>
+<p>At stage 2, one could run DL_FIELD as instructed provided DL_FILED is installed.</p>
+<p>At stage 3, one could run MD simulations provided Gromacs is installed.</p>
+<p>The corresponding commands are embedded in <strong>text blocks</strong> and should be run in a terminal, <em>not</em> in this notebook.</p>
 </li>
 <li><p><strong>Stages 5 and 6</strong> require Gromacs installation and serious computer resources (at least 16 CPU cores and 8 Gb of RAM).</p>
+<p>Therefore, the notebook only provides instructions how to run the commands. Interested users can practice on their own later.</p>
 </li>
-<li><p>Everything the notebook generates goes into <code>usr-out/</code> (please do not overwrite the contents of <code>inp/</code>).</p>
+<li><p>Everything the notebook generates goes into subfolder <code>usr-out/</code> (which will be created below).</p>
+</li>
+<li><p>Do not overwrite the contents of <code>inp/</code> and other preexisting folders!</p>
 </li>
 </ul>
 <h3 id="Directory-contents">Directory contents<a class="anchor-link" href="#Directory-contents">¶</a></h3><p><code>inp/lipids.sml</code> - SMILES strings for DPPC, DOPC and POPC.</p>
 <p><code>inp/lipid_tail_restraints.py</code> - helper script that adds the tail-alignment restraints to a lipid topology (see stage 3).</p>
 <p><code>toppar/</code> - contains all the topology and simulation setup files necessary for this tutorial</p>
-<p><strong>NOTE:</strong> To validate user's generated outputs produced in this tutorial, unpack the archive (this is a <strong>requirement for this tutorial</strong>):</p>
+<p><strong>NOTE:</strong> To be able to validate user's generated outputs produced in this tutorial, unpack the archive (this is a <strong>requirement for this tutorial</strong>):</p>
 </div>
 </div>
 </div>
@@ -7632,12 +7657,13 @@ vesicle
 <p><code>usr-ref/restraints/</code> - reference data for restraining lipid tails</p>
 <p><code>usr-ref/tails/</code> - reference data obtained upon running Gromacs with restraints for aligning lipid tails</p>
 <p><code>usr-ref/vesicle/</code> - reference data obtained upon running Gromacs equilibration stages for a vesicle</p>
-<p>Now create <code>usr-out/</code> which will contain all the user produced artifacts, so the reference outputs in <code>usr-ref/</code> are kept intact!</p>
-<p><code>usr-out/</code> - will contain the same subfolder structure as that found in <code>usr-ref/</code>.</p>
+<p><strong>NOTE:</strong> For this notebook to run smoothly the user is supposed to work in a separate subfolder:</p>
+<p><code>usr-out</code> which will contain the same structure as that found in <code>usr-ref/</code> and all the user produced artifacts, so the reference outputs in <code>usr-ref/</code> are kept intact.</p>
+<p>However, <strong>to save space and avoid duplication of outputs</strong>, instead of creating <code>usr-out/</code> we will merely rename <code>usr-ref</code>:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d59ff5cc-2cf2-4d52-bce1-7f4e97980676">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=9d5c5a46-38a3-4c1d-81d5-88258710bc8b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7645,7 +7671,8 @@ vesicle
 <div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>mkdir<span class="w"> </span>-vp<span class="w"> </span>usr-out/
+<div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>mv<span class="w"> </span>-v<span class="w"> </span>usr-ref<span class="w"> </span>usr-out
+<span class="o">!</span>ls<span class="w"> </span>usr-out/
 </pre></div>
 </div>
 </div>
@@ -7658,9 +7685,21 @@ vesicle
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>mkdir: created directory 'usr-out/'
+<pre>renamed 'usr-ref' -&gt; 'usr-out'
+dlf  restraints  smiles  tails	vesicle
 </pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c9b720d3-f54f-4d44-9990-b9213578e028">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Now we can safely work in <code>usr-out/</code> whereas the reference data can be restored, if needed, by unpacking the archive as above!</p>
 </div>
 </div>
 </div>
@@ -7831,8 +7870,9 @@ chem.f.      name   SMILES string
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>usr-out/smiles/DOPCC_smiles.gro  usr-out/smiles/POPCC_smiles.gro
-usr-out/smiles/DPPCC_smiles.gro
+<pre>usr-out/smiles/DOPCC_smiles.gro  usr-out/smiles/DPPC_smiles.gro
+usr-out/smiles/DOPC_smiles.gro	 usr-out/smiles/POPCC_smiles.gro
+usr-out/smiles/DPPCC_smiles.gro  usr-out/smiles/POPC_smiles.gro
 </pre>
 </div>
 </div>
@@ -8130,7 +8170,8 @@ cd ../..
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>usr-out/dlf/dlf_output1:
+<pre>cp: cannot stat 'usr-ref/dlf': No such file or directory
+usr-out/dlf/dlf_output1:
 dl_field.output      DPPC_dlf.gro  DPPC_dlf.mdp
 dlf_notation.output  DPPC_dlf.itp  DPPC_dlf.top
 
@@ -8167,17 +8208,7 @@ dlf_notation.output  POPC_dlf.itp  POPC_dlf.top
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>[ moleculetype ]
-; name    nrexcl
-DPPC      3
-
-[ atoms ]
-; nr   type   resnr   residu    atom    cgnr    charge    mass
-    1       NTL    1 DPPC       N        1   -0.600000   14.006700
-    2      CTL5    1 DPPC     C13        2   -0.350000   12.011000
-    3        HL    1 DPPC    H13A        3    0.250000    1.007970
-    4        HL    1 DPPC    H13B        4    0.250000    1.007970
-    5        HL    1 DPPC    H13C        5    0.250000    1.007970
+<pre>sed: can't read usr-ref/dlf/dlf_output1/DPPC_dlf.itp: No such file or directory
 </pre>
 </div>
 </div>
@@ -8573,23 +8604,7 @@ N=$(sed -n 2p ${L}_seed.gro | tr -d ' ')
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>
-Checking restrainted structure for DOPC:
-    N - C218   2.57 nm  (allowed 2.65 - 2.85)  off
-    N - C318   2.59 nm  (allowed 2.65 - 2.85)  off
- C218 - C318   0.44 nm  (allowed 0.4 - 0.6)  ok
- C216 - C316   0.45 nm  (allowed 0.4 - 0.6)  ok
- C214 - C314   0.44 nm  (allowed 0.4 - 0.6)  ok
- C212 - C312   0.47 nm  (allowed 0.4 - 0.6)  ok
- C210 - C310   0.63 nm  (allowed 0.4 - 0.6)  ok
-
-Checking restrainted structure for DPPC:
-    N - C216   2.44 nm  (allowed 2.4 - 2.6)  ok
-    N - C316   2.51 nm  (allowed 2.4 - 2.6)  ok
- C216 - C316   0.40 nm  (allowed 0.4 - 0.6)  ok
- C214 - C314   0.56 nm  (allowed 0.4 - 0.6)  ok
- C212 - C312   0.58 nm  (allowed 0.4 - 0.6)  ok
- C210 - C310   0.57 nm  (allowed 0.4 - 0.6)  ok
+<pre>cp: cannot stat 'usr-ref/tails': No such file or directory
 
 Checking restrainted structure for POPC:
     N - C218   2.71 nm  (allowed 2.65 - 2.85)  ok
@@ -8599,6 +8614,23 @@ Checking restrainted structure for POPC:
  C214 - C314   0.56 nm  (allowed 0.4 - 0.6)  ok
  C212 - C312   0.54 nm  (allowed 0.4 - 0.6)  ok
  C210 - C310   0.60 nm  (allowed 0.4 - 0.6)  ok
+
+Checking restrainted structure for DPPC:
+    N - C216   2.44 nm  (allowed 2.4 - 2.6)  ok
+    N - C316   2.51 nm  (allowed 2.4 - 2.6)  ok
+ C216 - C316   0.40 nm  (allowed 0.4 - 0.6)  ok
+ C214 - C314   0.56 nm  (allowed 0.4 - 0.6)  ok
+ C212 - C312   0.58 nm  (allowed 0.4 - 0.6)  ok
+ C210 - C310   0.57 nm  (allowed 0.4 - 0.6)  ok
+
+Checking restrainted structure for DOPC:
+    N - C218   2.57 nm  (allowed 2.65 - 2.85)  off
+    N - C318   2.59 nm  (allowed 2.65 - 2.85)  off
+ C218 - C318   0.44 nm  (allowed 0.4 - 0.6)  ok
+ C216 - C316   0.45 nm  (allowed 0.4 - 0.6)  ok
+ C214 - C314   0.44 nm  (allowed 0.4 - 0.6)  ok
+ C212 - C312   0.47 nm  (allowed 0.4 - 0.6)  ok
+ C210 - C310   0.63 nm  (allowed 0.4 - 0.6)  ok
 </pre>
 </div>
 </div>
@@ -8875,7 +8907,7 @@ outer leaflet: 521 molecules
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>NOTE:</strong> The initial vesicle structure we created is too large to be viewed in NGLView, but you can check it in VMD (visualisation software: <a href="https://www.ks.uiuc.edu/Research/vmd/">https://www.ks.uiuc.edu/Research/vmd/</a>).</p>
-<h1 id=""><img alt="Vesicle" src="./_images/Vesicle_PlaneClip_VMD_VDW_3D.png"/><a class="anchor-link" href="#">¶</a></h1>
+<p><img alt="Vesicle" src="./_images/Vesicle_PlaneClip_VMD_VDW_3D.png"/></p>
 </div>
 </div>
 </div>
@@ -8959,7 +8991,8 @@ cat<span class="w"> </span>solutes-posres.txt
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>stage  integrator         length          restraint
+<pre>cp: cannot stat '../../usr-ref/vesicle/*': No such file or directory
+stage  integrator         length          restraint
 eq0    steep         10000 steps               none
 eq1    md                  25 ps      500.0 kJ mol^-1 nm^-2
 eq2    md                  50 ps      300.0 kJ mol^-1 nm^-2

@@ -1,0 +1,9 @@
+# Where Shapespyer keeps its files when you run the notebooks locally.
+# Relative paths are read from this file's folder. 
+# On Colab the setup cell writes its own copy.
+# The library (LocalAssets/), Temp/ and Projects/ go to app_path: .data/ in the repo root.
+# app_path: ../.data
+# The user outputs go to app_path: usr-out/ in the Tutorial root.
+app_path: ./usr-out
+# Uncomment for a GROMACS that isn't on PATH, such as a Windows build:
+# gmx_executable: C:/GROMACS/bin/gmx.exe
