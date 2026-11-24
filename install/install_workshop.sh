@@ -41,8 +41,9 @@ else
         echo "Install curl before running this script." >&2
         exit 1
     fi
-    INSTALLER="$(mktemp "${TMPDIR:-/tmp}/miniforge-installer.XXXXXX")"
-    trap 'rm -f "$INSTALLER"' EXIT
+    INSTALLER_DIR="$(mktemp -d "${TMPDIR:-/tmp}/miniforge-installer.XXXXXX")"
+    INSTALLER="$INSTALLER_DIR/Miniforge3.sh"
+    trap 'rm -f "$INSTALLER"; rmdir "$INSTALLER_DIR"' EXIT
     echo "Installing Miniforge into $HOME/miniforge3..."
     curl -fsSL "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$INSTALLER_SYSTEM-$ARCH.sh" -o "$INSTALLER"
     bash "$INSTALLER" -b -p "$HOME/miniforge3"
