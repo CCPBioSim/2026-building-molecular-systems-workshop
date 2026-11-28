@@ -1,6 +1,8 @@
 # 2026-building-molecular-systems-workshop
 
-Repository containing workshop material for the 2026 Building Molecular Systems Workshop
+Repository containing workshop material for the 2026 Building Molecular Systems Workshop.
+
+The workshop has concluded and this repository is now marked as archived. This means the material in this repository will no longer be updated or changed, but can still be forked or cloned. 
 
 
 ## Running the workshop
