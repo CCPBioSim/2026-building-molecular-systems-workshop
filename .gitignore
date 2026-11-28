@@ -3,7 +3,7 @@
 
 # Slide decks (large binaries)
 *.key
-*.pdf
+# *.pdf
 
 # Local pixi environment (pixi.toml and pixi.lock are tracked)
 .pixi/
